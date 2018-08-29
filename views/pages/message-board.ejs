@@ -1,0 +1,69 @@
+<div id="messages">
+  <div class="container">
+    <h1 class="text-center">
+    </h1>
+
+    <div class="board-container">
+      <ul id="table">
+        <%  for (items in msg) { %>
+        <li id=<%= msg[items].id%>>
+          <div class="text-left">
+            <h4><%= msg[items].message %></h4>
+          </div>
+          <div class="text-right">
+            <h6>
+              <%= ((msg[items].user) ? msg[items].user : " Anonymous") %>
+            </h6>
+            <h6>
+              <%= new Date(msg[items].time).getHours()%>:<%=new Date(msg[items].time).getMinutes()%>:<%=new Date(msg[items].time).getSeconds()%>
+              <%= new Date(msg[items].time).getDate()%>, <%=new Date(msg[items].time).getMonth()+1%>, <%=new Date(msg[items].time).getFullYear()%>
+            </h6>
+            <a href=<%="/delete/"+ msg[items].id%>>delete</a>
+            <input type="button" name="reply" value="reply" onclick="getElementById(msg[items].id).style.display='block'"/>
+            <div style="display:none" id=<%="reply"+msg[items].id%>>
+              <form class="form-group" method='POST'>
+                <div class="form-group">
+                  <label for="exampleTextarea">Message</label>
+                  <textarea class="form-control" id="message" type="text" name="message" rows="3"></textarea>
+                  <label for="exampleTextarea">User</label>
+                  <input class="form-control" id="user" type="text" name="user"></input>
+                  <input class="form-control" style="display:none" id="parent" value=<%= msg[items].id%>>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+          <ul id="table-reply" style="text-indent: 20px">
+            <%  for (reply in child) { if(child[reply].parent===msg[reply].id) {%>
+              <li id=<%= child[reply].id%>>
+                <div class="text-left">
+                  <h4><%= child[reply].message %></h4>
+                </div>
+                <div class="text-right">
+                  <h6>
+                    <%= ((child[reply].user) ? child[reply].user : " Anonymous") %>
+                  </h6>
+                  <h6>
+                    <%= new Date(child[reply].time).getHours()%>:<%=new Date(child[reply].time).getMinutes()%>:<%=new Date(child[reply].time).getSeconds()%>
+                    <%= new Date(child[reply].time).getDate()%>, <%=new Date(child[reply].time).getMonth()+1%>, <%=new Date(child[reply].time).getFullYear()%>
+                  </h6>
+                  <a href=<%="/delete/"+ child[reply].id%>>delete</a>
+              <%}}%>
+          </ul>
+          <br>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+      <form method='POST'>
+        <div class="form-group">
+          <label for="exampleTextarea">Message</label>
+          <textarea class="form-control" id="message" type="text" name="message" rows="3"></textarea>
+          <label for="exampleTextarea">User</label>
+          <input class="form-control" id="user" type="text" name="user"></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
