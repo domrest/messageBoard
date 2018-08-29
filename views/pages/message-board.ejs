@@ -19,22 +19,10 @@
               <%= new Date(msg[items].time).getDate()%>, <%=new Date(msg[items].time).getMonth()+1%>, <%=new Date(msg[items].time).getFullYear()%>
             </h6>
             <a href=<%="/delete/"+ msg[items].id%>>delete</a>
-            <input type="button" name="reply" value="reply" onclick="getElementById(msg[items].id).style.display='block'"/>
-            <div style="display:none" id=<%="reply"+msg[items].id%>>
-              <form class="form-group" method='POST'>
-                <div class="form-group">
-                  <label for="exampleTextarea">Message</label>
-                  <textarea class="form-control" id="message" type="text" name="message" rows="3"></textarea>
-                  <label for="exampleTextarea">User</label>
-                  <input class="form-control" id="user" type="text" name="user"></input>
-                  <input class="form-control" style="display:none" id="parent" value=<%= msg[items].id%>>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-            </div>
+
           </div>
           <ul id="table-reply" style="text-indent: 20px">
-            <%  for (reply in child) { if(child[reply].parent===msg[reply].id) {%>
+            <%  for (reply in child) { if(child[reply].parent===msg[items].id) {%>
               <li id=<%= child[reply].id%>>
                 <div class="text-left">
                   <h4><%= child[reply].message %></h4>
@@ -50,7 +38,22 @@
                   <a href=<%="/delete/"+ child[reply].id%>>delete</a>
               <%}}%>
           </ul>
-          <br>
+          <div class="text-right">
+            <br>
+            <input type="button" name="reply" value="reply" onclick=<%="getElementById('reply"+msg[items].id+"').style.display='block';"%>></input>
+            <div style="display:none" id=<%="reply"+msg[items].id%>>
+              <form class="form-group" method='POST'>
+                <div class="form-group">
+                  <label for="exampleTextarea">Message</label>
+                  <textarea class="form-control" id="message" type="text" name="message" rows="3"></textarea>
+                  <label for="exampleTextarea">User</label>
+                  <input class="form-control" id="user" type="text" name="user"></input>
+                  <input class="form-control" style="display:none" id="parent" name="parent" value=<%= msg[items].id%>>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
         </li>
         <% } %>
       </ul>

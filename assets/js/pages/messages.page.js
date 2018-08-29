@@ -43,8 +43,8 @@ parasails.registerPage('messages', {
       window.location = '/';
     },
 
-    onButtonClick: async function(id){
-     document.getElementById(id).style.display="block";
+    onButtonClick: function(id){
+     window.getElementById(id).style.display="block";
     },
 
 

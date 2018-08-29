@@ -33,12 +33,16 @@ module.exports = {
 
   },
 
-
-
-  fn: async function(inputs){
-    if(res.method==="DELETE"){
-      sails.log("hi");
+  exits:{
+    redirect: {
+      description: 'Added new Message',
+      extendedDescription: 'Only Logged-in users can view and post on the board."',
+      responseType: 'redirect',
     }
+
+  },
+
+  fn: async function(inputs, exits){
 
     var message = inputs.message;
     var user = inputs.user;
@@ -63,7 +67,7 @@ module.exports = {
         user: user
       });
     }
-    return this.req.redirect("/");
+    return exits.redirect("/");
 
   }
 

@@ -27,7 +27,9 @@ module.exports = {
 
       //db.Messages.find().toArray(console.log);
       var messages = await Messaging.find({parent:'root'});
+      sails.log(messages);
       var children = await Messaging.find({parent: {'!=' : 'root'}})
+      sails.log(children);
       return exits.success({msg:messages, child:children});
 
     },
